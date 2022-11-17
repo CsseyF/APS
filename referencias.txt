@@ -6,3 +6,6 @@ Insertion sort - https://www.youtube.com/watch?v=223Znl4r_xo
 
 Selection sort - https://www.youtube.com/watch?v=LYkZLxO8HtQ
                  https://www.dremendo.com/c-programming-tutorial/c-selection-sort
+
+
+Merge Sort - https://www.edureka.co/blog/merge-sort-in-c/
