@@ -1,0 +1,3 @@
+https://www.treinaweb.com.br/blog/conheca-os-principais-algoritmos-de-ordenacao
+
+Insertion sort - https://www.youtube.com/watch?v=223Znl4r_xo
