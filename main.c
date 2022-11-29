@@ -7,7 +7,7 @@
 void insertionSort(int arrSize,char arrInsert[arrSize][MAX_LINE_LENGHT], int descending){
 
     //Declaração de variáveis
-    int i,j;
+    int i,j,counter;
     char x[MAX_LINE_LENGHT];
 
     // Executa um loop de 1 a N para repetir o processo de ordenação por inserção
@@ -26,6 +26,7 @@ void insertionSort(int arrSize,char arrInsert[arrSize][MAX_LINE_LENGHT], int des
                 // então muda a string do array para a direita, senão quebra o loop.
                 if(strcmp(x,arrInsert[j])<0)
                 {
+                    counter++;
                     strcpy(arrInsert[j+1],arrInsert[j]);
                 }
                 else
@@ -38,6 +39,7 @@ void insertionSort(int arrSize,char arrInsert[arrSize][MAX_LINE_LENGHT], int des
                 //Mesmo processo citado acima, mas decrescentemente
                 if(strcmp(x,arrInsert[j])>0)
                 {
+                    counter++;
                     strcpy(arrInsert[j+1],arrInsert[j]);
                 }
                 else
@@ -55,13 +57,13 @@ void insertionSort(int arrSize,char arrInsert[arrSize][MAX_LINE_LENGHT], int des
     for(i = 0; i < arrSize; i++){
         printf(" %d:%s",i+1,arrInsert[i]);
     }
-
+    printf("Comparisions: %d",counter );
 }
 
 void selectionSort(int arrSize, char arrSelect[arrSize][MAX_LINE_LENGHT], int descending){
 
     //Declaração de variáveis
-    int i,j,snp;
+    int i,j,snp, counter;
     char t[MAX_LINE_LENGHT];
 
     // Executa um loop de 0 a N para repetir o processo de ordenação por seleção
@@ -76,12 +78,14 @@ void selectionSort(int arrSize, char arrSelect[arrSize][MAX_LINE_LENGHT], int de
             if(descending == 1){
                 if(strcmp(arrSelect[j],arrSelect[snp])<0)
                 {
+                    counter++;
                     snp=j;
                 }
             }
             else{
                 if(strcmp(arrSelect[j],arrSelect[snp])>0)
                 {
+                    counter++;
                     snp=j;
                 }
             }
@@ -113,12 +117,14 @@ void selectionSort(int arrSize, char arrSelect[arrSize][MAX_LINE_LENGHT], int de
     for(i = 0; i < arrSize; i++){
         printf(" %d:%s",i+1,arrSelect[i]);
     }
+
+    printf("Comparisions: %d",counter );
 }
 
 void merge(int arrSize, char newArr[arrSize][MAX_LINE_LENGHT], int l, int m, int r)
 {
     // Declaração das variaveis
-    int i, j, k;
+    int i, j, k, counter;
     int n1 = m - l + 1;
     int n2 = r - m;
 
@@ -143,6 +149,7 @@ void merge(int arrSize, char newArr[arrSize][MAX_LINE_LENGHT], int l, int m, int
     {
         if (strcmp(L[i],R[j])<0)
         {
+            counter++;
             strcpy(newArr[k++],L[i++]);
         }
         else
@@ -162,6 +169,8 @@ void merge(int arrSize, char newArr[arrSize][MAX_LINE_LENGHT], int l, int m, int
     {
         strcpy(newArr[k++],R[j++]);
     }
+
+    printf("Comparisions: %d",counter );
 }
 
 
