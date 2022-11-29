@@ -67,7 +67,6 @@ void selectionSort(int arrSize, char arrSelect[arrSize][MAX_LINE_LENGHT], int de
     // Executa um loop de 0 a N para repetir o processo de ordenação por seleção
     for(i=0; i < arrSize; i++)
     {
-
         // Posição da menor string
         snp=i;
 
@@ -182,17 +181,58 @@ void mergeSort(int arrSize, char newArr[arrSize][MAX_LINE_LENGHT], int l, int r)
     }
 }
 
+//Função que remove a duplicidade das listas.
+void duplicityRemover(int arrSize, char newArr[arrSize][MAX_LINE_LENGHT] ){
+    char temp[arrSize][MAX_LINE_LENGHT];
+
+    int i;
+    int count = 0;
+
+    for(i = 0; i < arrSize - 1; i++){
+        int j;
+
+        for(j = 0; j < count; j++){
+            if(newArr[i] == temp[i]){
+                break;
+            }
+        }
+        if(j == count){
+            strcpy(temp[count], newArr[i]);
+            count++;
+        }
+    }
+    
+    for(i = 0; i < arrSize; i++){
+        printf(" %d:%s",i+1,newArr[i]);
+    }
+}
+
+
+//Função que deixa a lista de animais aleatória dinamicamente
+void randomizeList(int arrSize, char newArr[arrSize][MAX_LINE_LENGHT]){
+    int i;
+
+    for(i = 0; i < arrSize; i++){
+        char* temp;
+        int j = i + rand() % (i+1);
+        
+        strcpy(temp, newArr[j]);
+        strcpy(newArr[j], newArr[i]);
+        strcpy(newArr[i], temp);
+        printf("%d:%s",i + 1,temp);
+    }
+}
 
 int main(){
 
     //Declarações responsáveis por ler o arquivo
     FILE *textfile;
     char line[MAX_LINE_LENGHT];
-    char arr[900][MAX_LINE_LENGHT];
+    char arr[1800][MAX_LINE_LENGHT];
     int i;
     
     //Declarações responsáveis pela navegação na interface
-    int filterOption, groupOption, groupValue, AsOrDesOption;
+    int filterOption, groupOption, groupValue, AsOrDesOption, duplicityOption, randomOption;
 
     //Parte do código responsavel por ler o arquivo de texto
     #pragma region ReadFile
@@ -203,7 +243,7 @@ int main(){
     
     // Lê cada uma das linhas e cria um elemento no array para cada uma.
     while(fgets(line, sizeof(line), textfile)){
-        if(i < 900){
+        if(i < 1800){
         strcpy(arr[i], line);
         i++;
         }
@@ -214,22 +254,92 @@ int main(){
     #pragma endregion
 
     //Inicio da interface
-    printf("Bem vindo! \nSelecione o metodo de ordenacao desejado:\n");
-    printf("1: Insertion sort \n2: Selection sort \n3: Merge sort\n");
-    printf("Opcao desejada: ");
-    scanf("%d", &filterOption);
 
-    if(filterOption > 3 || filterOption < 0){
+    printf("Bem vindo ao nosso sistema de ordenacao de dados!\nSelecione como os dados devem ser apresentados:\n");
+    printf("1: Ordenados \n2: Aleatorios\n");
+    printf("Opcao desejada: ");
+    scanf("%d", &randomOption);
+
+    if(randomOption > 2 || randomOption < 0){
         printf("Opcao invalida, tente novamente.\n");
         main();
     }
 
     printf("Otimo! Agora selecione o conjunto de quantos animais serao ordenados:\n");
-    printf("1: 100 Animais \n2: 400 Animais \n3: 600 Animais \n4: 900 Animais\n");
+    printf("1: 100 Animais \n2: 300 Animais \n3: 600 Animais \n4: 900 Animais\n");
     printf("Opcao desejada: ");
     scanf("%d", &groupOption);
 
-    if(filterOption > 4 || filterOption < 0){
+    if(groupOption > 4 || groupOption < 0){
+        printf("Opcao invalida, tente novamente.\n");
+        main();
+    }
+
+    printf("Os dados poderao vir duplicados ou unicos?\n");
+    printf("1: Duplicados \n2: Unicos\n");
+    printf("Opcao desejada: ");
+    scanf("%d", &duplicityOption);
+
+    if(duplicityOption > 2 || duplicityOption < 0){
+        printf("Opcao invalida, tente novamente.\n");
+        main();
+    }
+
+    //Checa qual deve ser o tamanho do grupo
+    switch (groupOption)
+    {
+    case 1:
+        groupValue = 100;
+        break;
+    
+    case 2:
+        groupValue = 300;
+        break;
+
+    case 3:
+        groupValue = 600;
+        break;
+    
+    case 4: 
+        groupValue = 900;
+        break;
+    default:
+        break;
+    }
+
+    //Verifica se os animais mostrados devem ser em ordem aleatória
+    if(randomOption == 2){
+        //Verifica se deve haver duplicidade
+        if(duplicityOption == 2){
+        int i, j, k;
+        int size = 1800;
+
+        for(i = 0; i < size; i++){
+            for(j = i + 1; j < size; j++){
+                if(strcmp(arr[i],arr[j]) == 0){
+                    for(k = j; k < size - 1; k++ ){
+                        strcpy(arr[k], arr[k + 1]);
+                    }
+                    size--;
+                    j--;
+                }
+            }
+        }
+            randomizeList(groupValue, arr);
+            return 0;
+        }
+        randomizeList(groupValue, arr);
+
+
+        return 0;
+    }
+
+    printf("Selecione o metodo de ordenacao desejado:\n");
+    printf("1: Insertion sort \n2: Selection sort \n3: Merge sort\n");
+    printf("Opcao desejada: ");
+    scanf("%d", &filterOption);
+
+    if(filterOption > 3 || filterOption < 0){
         printf("Opcao invalida, tente novamente.\n");
         main();
     }
@@ -245,34 +355,35 @@ int main(){
     }
 
     //Tratamento das respostas e opções do programa.
-    switch (groupOption)
-    {
-    case 1:
-        groupValue = 100;
-        break;
-    
-    case 2:
-        groupValue = 400;
-        break;
-
-    case 3:
-        groupValue = 600;
-        break;
-    
-    case 4: 
-        groupValue = 900;
-        break;
-    default:
-        break;
-    }
-
     char newArr[groupValue][MAX_LINE_LENGHT];
+
+    int old_arr_size = sizeof(newArr)/sizeof(newArr[0]);
 
     for(i = 0; i < groupValue; i++){
         strcpy(newArr[i], arr[i]);
     }
 
+    //Filtro de duplicidade
+    if(duplicityOption == 2){
+        int i, j, k;
+        int size = old_arr_size;
+
+        for(i = 0; i < size; i++){
+            for(j = i + 1; j < size; j++){
+                if(strcmp(newArr[i],newArr[j]) == 0){
+                    for(k = j; k < size - 1; k++ ){
+                        strcpy(newArr[k], newArr[k + 1]);
+                    }
+                    size--;
+                    j--;
+                }
+            }
+        }
+
+    }
+
     int arr_size = sizeof(newArr)/sizeof(newArr[0]);
+
 
     switch (filterOption)
     {
